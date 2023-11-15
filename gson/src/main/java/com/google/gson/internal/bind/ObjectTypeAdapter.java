@@ -95,7 +95,12 @@ public final class ObjectTypeAdapter extends TypeAdapter<Object> {
       return in.nextString();
 
     case NUMBER:
-      return toNumberStrategy.readNumber(in);
+      String number = in.nextString();
+      try {
+        return Long.valueOf(number);
+      } catch (NumberFormatException e) {
+        return Double.valueOf(number);
+      }
 
     case BOOLEAN:
       return in.nextBoolean();
